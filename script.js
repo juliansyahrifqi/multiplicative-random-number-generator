@@ -53,22 +53,34 @@ let resultNumbers = [];
 // 	`;
 // }
 
-form.addEventListener('submit', function(e) {
-	e.preventDefault();
-	
-	multiplicative(z0.value, a.value, m.value, randomNumbers, totalNumber.value+1);
-	getRandomNumbers(randomNumbers, m.value, resultNumbers, totalNumber.value+1);
+let onSubmit = false;
+
+
+function loadData() {
 
 	asumsi.innerHTML += `a = ${a.value}, m = ${m.value}, z0 = ${z0.value}`;
 
 	for(let i = 0; i < totalNumber.value; i++) {
+		let hasilPerkalian = randomNumbers[i] * a.value;
+
 		tbody.innerHTML += `
 		<tr>
 			<td>${i+1}</td>
 			<td>${randomNumbers[i]}</td>
+			<td>${randomNumbers[i]} * ${a.value} = ${hasilPerkalian} </td>
 			<td>Z${i+1} = (${a.value} * ${randomNumbers[i]}) mod ${m.value} = ${randomNumbers[i+1]}</td>
 			<td>U${i+1} = ${randomNumbers[i+1]} / ${m.value} = ${resultNumbers[i]} </td>
 		</tr>
 		`;
 	}
+}
+
+form.addEventListener('submit', function(e) {
+	console.log(e);
+	e.preventDefault();
+
+	multiplicative(z0.value, a.value, m.value, randomNumbers, totalNumber.value+1);
+	getRandomNumbers(randomNumbers, m.value, resultNumbers, totalNumber.value+1);
+
+	loadData();
 });
